@@ -34,6 +34,10 @@ public class MyFileWriter {
         System.out.println(file.length());
     }
 
+    public String toString() {
+        return "Hello World";
+    }
+
     public static void main(String[] args) {
         printFileSize("testFile");
     }
