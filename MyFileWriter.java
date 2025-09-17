@@ -43,6 +43,9 @@ public class MyFileWriter {
     System.out.println("Total size of all files: " + totalSize + " bytes");
 
 }
+    public String toString() {
+        return "Hello World";
+    }
 
     public static void main(String[] args) {
         // test each file individually
