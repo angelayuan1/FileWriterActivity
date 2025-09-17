@@ -29,12 +29,29 @@ public class MyFileWriter {
     }
 
     // Calculate and print the file size using the File class
-    private static void printFileSize(String fileName) {
+    private static void printFileSize(String... fileNames) {
+    long totalSize = 0;
+    for (String fileName : fileNames) {
         File file = new File(fileName);
-        System.out.println(file.length());
+
+        if (file.exists()) {
+            totalSize += file.length();
+
+        }
     }
 
+    System.out.println("Total size of all files: " + totalSize + " bytes");
+
+}
+
     public static void main(String[] args) {
-        printFileSize("testFile");
+        // test each file individually
+        printFileSize("testFile.txt"); // 13
+        printFileSize("testFile2.txt"); // 39
+        printFileSize("testFile3.txt"); // 15
+
+        // all together
+        printFileSize("testFile.txt", "testFile2.txt", "testFile3.txt"); // 67
+
     }
 }
