@@ -1,5 +1,7 @@
 import java.io.*;
 import java.nio.file.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
 public class MyFileWriter {
@@ -43,12 +45,37 @@ public class MyFileWriter {
     System.out.println("Total size of all files: " + totalSize + " bytes");
 
 }
+
+
     public String toString() {
         return "Hello World";
     }
 
-    public String toString() {
-        return "Hello World";
+    public static String hashFile(String filepath) {
+        try (FileInputStream f = new FileInputStream(filepath)) {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bt = new byte[8192];
+            int i;
+            while ((i = f.read(bt)) != -1) {
+                md.update(bt, 0, i);
+            }
+            byte[] hashedBytes = md.digest();
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                hexString.append(String.format("%02x", b & 0xff));
+            }
+            return hexString.toString();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found " + filepath);
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error while reading file: " + e.getMessage());
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error: SHA-256 algorithm not available.");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String[] args) {
